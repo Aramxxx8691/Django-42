@@ -186,7 +186,7 @@ p[data-value]:after {
     -webkit-linear-gradient( top,
 														rgba(255, 255, 255, .25),
 														rgba(0,0,0,.2)),
-     -webkit-linear-gradient( left, #09c, #ff0);
+     -webkit-linear-gradient( left, #09c, #f44);
 }
 
 .jquery::-webkit-progress-value,
@@ -203,7 +203,7 @@ p[data-value]:after {
     -webkit-linear-gradient( top,
 														rgba(255, 255, 255, .25),
 														rgba(0,0,0,.2)),
-     -webkit-linear-gradient( left, #09c, #690);
+     -webkit-linear-gradient( left, #09c, #f44);
 }
 
 /* Similarly, for Mozillaa. Unfortunately combining the styles for different browsers will break every other browser. Hence, we need a separate block. */
@@ -226,7 +226,6 @@ p[data-value]:after {
 
 .css3::-moz-progress-bar,
 .php::-moz-progress-bar {
-{
 	/* Gradient background with Stripes */
 	background-image:
 	-moz-linear-gradient( 135deg,
@@ -238,7 +237,7 @@ p[data-value]:after {
     -moz-linear-gradient( top,
 														rgba(255, 255, 255, .25),
 														rgba(0,0,0,.2)),
-     -moz-linear-gradient( left, #09c, #ff0);
+     -moz-linear-gradient( left, #09c, #f44);
 }
 
 .jquery::-moz-progress-bar,
@@ -254,7 +253,7 @@ p[data-value]:after {
     -moz-linear-gradient( top,
 														rgba(255, 255, 255, .25),
 														rgba(0,0,0,.2)),
-     -moz-linear-gradient( left, #09c, #690);
+     -moz-linear-gradient( left, #09c, #f44);
 }
 
 /* Now we are good to duplicate html code for other skills and then add the css code for the new skill based on data-skill */
