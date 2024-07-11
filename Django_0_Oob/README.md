@@ -218,6 +218,7 @@ If all tests pass, you should see a message indicating that the tests succeeded.
 - `Class Design`: Learn how to design classes to represent complex structures like HTML elements.
 - `String Manipulation`: Practice generating and formatting strings based on dynamic content.
 - `Exception Handling`: Understand how to manage and handle exceptions related to invalid input.
+
 By completing this exercise, you'll gain experience in building and managing HTML content programmatically, which is useful for web development and automated content generation.
 
 ## - ex05: Specialized HTML Element Classes

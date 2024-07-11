@@ -54,6 +54,7 @@ This exercise focuses on creating and styling HTML forms, and linking JavaScript
 
 ## - ex03: Recreating copy.html with External CSS and Image:
 In this exercise, you will replicate a webpage based on the provided screenshot and CSS file. Your goal is to reproduce the layout and design as accurately as possible, using the provided CSS without modifications.
+
 ### Tasks:
 1. Recreate copy.html Layout:
 - `Objective`: Accurately recreate the content and structure of the provided copy.html file.
@@ -65,6 +66,7 @@ In this exercise, you will replicate a webpage based on the provided screenshot 
 
 ## - ex04: Script Placement and Alerts:
 In this exercise, you will correctly place and import JavaScript files into your HTML document, ensuring that alerts are triggered as expected. You will also manage the inclusion of multiple JavaScript files without modifying them or adding additional JavaScript code.
+
 ### Tasks:
 1. Script Placement:
 - `Objective`: Place the provided JavaScript files in the correct project directory.
@@ -76,13 +78,12 @@ In this exercise, you will correctly place and import JavaScript files into your
 
 ## - ex05: W3C Validation and File Inclusion:
 This exercise involves ensuring your HTML file adheres to W3C standards by fixing validation errors and ensuring all necessary files are correctly linked and included.
+
 ### Tasks:
 1. W3C Validation:
-
 - `Objective`: Edit the HTML file located in the ex05/ sub-folder of the d00.tar.gz tarball to ensure it passes W3C validation with no errors or warnings.
 - `Validation Tool`: Use the [W3C Markup Validation Service](https://validator.w3.org/) to check the HTML file.
 - `Editing Requirements`: Correct any errors or warnings reported by the W3C validator while preserving the file's content in its entirety.
-
 2. File Inclusion Verification:
 - `Objective`: Ensure that all necessary CSS, JavaScript, and audio files are correctly linked and included in the HTML file.
 - `CSS Files`: Verify that all stylesheets are properly linked using <link> tags.
