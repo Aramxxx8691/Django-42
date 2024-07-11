@@ -1,7 +1,6 @@
 import sys, os, re
 import settings
 
-
 def render():
     error_msg = None
     if len(sys.argv) != 2:
