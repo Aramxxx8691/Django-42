@@ -89,7 +89,7 @@ def page():
     ])
     page = Page(html)
     if page.is_valid():
-        page.write_to_file('output.html')
+        page.write_to_file('Page.html')
         print("HTML is valid and written to file.")
     else:
         print("HTML is invalid.")
