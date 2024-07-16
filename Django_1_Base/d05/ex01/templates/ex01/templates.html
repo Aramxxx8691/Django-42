@@ -1,0 +1,33 @@
+{% extends 'ex01/base.html' %}
+{% load static %}
+
+{% block title %}Ex01: Template engine{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'style2.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Ex01: Template engine</h1>
+<p><strong>Description:</strong> In this page, describe the functioning of Django’s default template engine as well as the functioning of:</p>
+<ul>
+    <li>Blocks</li>
+    <li>Loops: for ... in</li>
+    <li>if control structures</li>
+    <li>The display of the passing context variables</li>
+</ul>
+<h2>Django's Default Template Engine</h2>
+<p>Django’s template engine is a powerful way to generate HTML dynamically...</p>
+
+<h3>Blocks</h3>
+<p>Blocks are used to define sections of a template that can be overridden by child templates...</p>
+
+<h3>Loops: for ... in</h3>
+<p>The for ... in loop is used to iterate over a sequence of items...</p>
+
+<h3>if control structures</h3>
+<p>if statements are used to perform conditional checks in templates...</p>
+
+<h3>Display of Context Variables</h3>
+<p>Context variables are passed from the view to the template and can be displayed using double curly braces...</p>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Shades Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            height: 40px;
+            width: 80px;
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Color Shades Table</h1>
+    <table>
+        <thead>
+            {{ header_row|safe }}
+        </thead>
+        <tbody>
+            {{ table_rows|safe }}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,61 @@
+{% extends 'ex01/base.html' %}
+{% load static %}
+
+{% block title %}Ex01: Display process of a static page{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'style1.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Ex01: Display process of a static page</h1>
+<p><strong>Description:</strong> In this page, describe the process causing the display of a static web page from a simple template going through a view, from the request to the answer.</p>
+
+<h2>Introduction</h2>
+<p>Displaying a static web page in Django involves a series of steps that start from the user's request and end with the server's response. This process includes routing the request, processing it in a view, rendering a template, and returning the response to the client.</p>
+
+<h2>Step-by-Step Process</h2>
+
+<h3>1. User Request</h3>
+<p>The process begins when a user makes a request by entering a URL in their browser. This request is sent to the Django server.</p>
+
+<h3>2. URL Routing</h3>
+<p>Django uses URLconf (URL configuration) to map the requested URL to a specific view. This is done in the <code>urls.py</code> file. For example:</p>
+<pre><code>
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('display_process/', views.display_process, name='display_process'),
+]
+</code></pre>
+
+<h3>3. View Function</h3>
+<p>The view function associated with the URL processes the request. It retrieves any necessary data, processes it, and prepares it for the template. For a static page, this might simply involve rendering the template without any data processing:</p>
+<pre><code>
+# views.py
+from django.shortcuts import render
+
+def display_process(request):
+    return render(request, 'display_process.html')
+</code></pre>
+
+<h3>4. Template Rendering</h3>
+<p>The view function calls the <code>render</code> function, passing the request object and the template name. Django's template engine processes the template and combines it with any context data provided.</p>
+
+<h3>5. HTTP Response</h3>
+<p>Once the template is rendered, Django creates an <code>HttpResponse</code> object containing the rendered HTML. This response is sent back to the user's browser.</p>
+
+<h2>Example</h2>
+<p>For the URL <code>/display_process/</code>, the following steps occur:</p>
+<ul>
+    <li>The user requests <code>/display_process/</code>.</li>
+    <li>Django's URL dispatcher maps this URL to the <code>display_process</code> view function.</li>
+    <li>The view function renders the <code>display_process.html</code> template.</li>
+    <li>The rendered HTML is returned to the user's browser, which displays the static page.</li>
+</ul>
+
+<h2>Conclusion</h2>
+<p>This process highlights the simplicity and efficiency of Django in handling web requests and serving static content. By following these steps, Django ensures a smooth transition from request to response, providing a seamless user experience.</p>
+{% endblock %}

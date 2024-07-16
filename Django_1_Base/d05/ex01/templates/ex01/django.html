@@ -1,0 +1,17 @@
+{% extends 'ex01/base.html' %}
+{% load static %}
+
+{% block title %}Ex01: Django, framework web{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'style1.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Ex01: Django, framework web</h1>
+<p><strong>Description:</strong> In this page, briefly introduce Django and its history.</p>
+<h2>Introduction to Django</h2>
+<p>Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design...</p>
+<h2>History of Django</h2>
+<p>Django was created in the fall of 2003...</p>
+{% endblock %}
