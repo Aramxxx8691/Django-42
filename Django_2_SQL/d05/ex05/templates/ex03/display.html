@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .custom-thead {
+            background-color: #9e9e9eee;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Star Wars Movies List</h1>
+        <table class="table table-striped">
+            <thead class="custom-thead">
+                <tr>
+                    <th>title</th>
+                    <th>episode_nb</th>
+                    <th>opening_crawl</th>
+                    <th>director</th>
+                    <th>producer</th>
+                    <th>release_date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movie in movies %}
+                <tr>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.episode_nb }}</td>
+                    <td>{{ movie.opening_crawl }}</td>
+                    <td>{{ movie.director }}</td>
+                    <td>{{ movie.producer }}</td>
+                    <td>{{ movie.release_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

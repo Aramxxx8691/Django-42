@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .custom-thead {
+            background-color: #e9ecef;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Planets</h1>
+        <table class="table table-striped">
+            <thead class="custom-thead">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Climate</th>
+                    <th>Diameter</th>
+                    <th>Orbital Period</th>
+                    <th>Population</th>
+                    <th>Rotation Period</th>
+                    <th>Surface Water</th>
+                    <th>Terrain</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if planets %}
+                    {% for planet in planets %}
+                    <tr>
+                        <td>{{ planet.0 }}</td>
+                        <td>{{ planet.1 }}</td>
+                        <td>{{ planet.2 }}</td>
+                        <td>{{ planet.3 }}</td>
+                        <td>{{ planet.4 }}</td>
+                        <td>{{ planet.5 }}</td>
+                        <td>{{ planet.6 }}</td>
+                        <td>{{ planet.7 }}</td>
+                        <td>{{ planet.8 }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="9">No data available</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <h1>People</h1>
+        <table class="table table-striped">
+            <thead class="custom-thead">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Birth Year</th>
+                    <th>Gender</th>
+                    <th>Eye Color</th>
+                    <th>Hair Color</th>
+                    <th>Height</th>
+                    <th>Mass</th>
+                    <th>Homeworld</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if people %}
+                    {% for person in people %}
+                    <tr>
+                        <td>{{ person.0 }}</td>
+                        <td>{{ person.1 }}</td>
+                        <td>{{ person.2 }}</td>
+                        <td>{{ person.3 }}</td>
+                        <td>{{ person.4 }}</td>
+                        <td>{{ person.5 }}</td>
+                        <td>{{ person.6 }}</td>
+                        <td>{{ person.7 }}</td>
+                        <td>{{ person.8 }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="9">No data available</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

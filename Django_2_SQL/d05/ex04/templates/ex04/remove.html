@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Movie</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Remove Movie</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Select a movie to remove:</label>
+                <select id="title" name="title" class="form-control">
+                    {% for movie in movies %}
+                        <option value="{{ movie.0 }}">{{ movie.0 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-danger">Remove</button>
+        </form>
+    </div>
+</body>
+</html>
