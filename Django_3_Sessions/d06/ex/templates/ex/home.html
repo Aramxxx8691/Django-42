@@ -1,0 +1,75 @@
+{% extends 'ex/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Welcome to MySite!</h1>
+    <p class="mb-4">This is your homepage.</p>
+
+    <!-- Create a Tip form, only shown to authenticated users -->
+    {% if user.is_authenticated %}
+        <h2 class="mb-4">Create a Tip</h2>
+        <div class="row mb-4">
+            <div class="col-md-8 offset-md-2">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>You must be logged in to create a tip.</p>
+    {% endif %}
+
+    <!-- Display Tips -->
+    <h2 class="mb-4">Tips</h2>
+    <ul class="list-unstyled">
+        {% for tip in tips %}
+            <li class="mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>{{ tip.author.username }} ({{ tip.author.profile.reputation }} rep)</strong>
+                            <span class="text-muted">{{ tip.date|date:"F j, Y, g:i a" }}</span>
+                        </div>
+                        <p class="mb-3">{{ tip.content }}</p>
+
+                        <!-- Upvote/Downvote section -->
+                        <div class="d-flex align-items-center gap-3">
+                            <form method="POST" action="{% url 'upvote_tip' tip.id %}" class="mb-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-primary">
+                                    👍 <span>{{ tip.upvotes }}</span>
+                                </button>
+                            </form>
+                            
+                            <form method="POST" action="{% url 'downvote_tip' tip.id %}" class="mb-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-primary">
+                                    👎 <span>{{ tip.downvotes }}</span>
+                                </button>
+                            </form>
+
+                            <!-- Delete button (visible to the author, superusers, and users with 30+ reputation) -->
+                            {% if tip.author == user or user.is_superuser or user.profile.reputation >= 30 %}
+                                <form method="POST" action="{% url 'delete_tip' tip.id %}" class="mb-0">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger">❌</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% empty %}
+            <li>No tips available.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

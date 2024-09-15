@@ -21,14 +21,10 @@ def var_to_dict():
         ('Thompson' , '1949'),
         ('Burton' , '1939'),
     ]
-    # Create dictionary using dictionary comprehension
     my_dict = {year: artist for artist, year in d}
-
-    # Print dictionary items
     for key, value in my_dict.items():
         print(f"{key} : {value}")
     return my_dict
-
 
 if __name__ == '__main__':
     var_to_dict()
