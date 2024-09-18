@@ -1,0 +1,25 @@
+{% extends 'ex/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Edit Article" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>{% trans "Edit Article" %}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">{% trans "Title" %}</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ article.title }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="synopsis" class="form-label">{% trans "Synopsis" %}</label>
+            <textarea class="form-control" id="synopsis" name="synopsis" rows="3" required>{{ article.synopsis }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">{% trans "Content" %}</label>
+            <textarea class="form-control" id="content" name="content" rows="5" required>{{ article.content }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+    </form>
+</div>
+{% endblock %}

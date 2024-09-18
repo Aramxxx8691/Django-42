@@ -1,0 +1,33 @@
+{% extends 'ex/base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Article Detail' %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Article Detail Section -->
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1>{{ article.title }}</h1>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span><strong>{% trans 'Author' %}:</strong> {{ article.author.username }}</span>
+                        <span><strong>{% trans 'Created' %}:</strong> {{ article.created|date:"Y-m-d H:i" }}</span>
+                        <span><strong>{% trans 'Updated' %}:</strong> {{ article.updated|date:"Y-m-d H:i" }}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h4>{% trans 'Synopsis' %}</h4>
+                        <p>{{ article.synopsis }}</p>
+                    </div>
+                    <div>
+                        <h4>{% trans 'Content' %}</h4>
+                        <p>{{ article.content|linebreaksbr }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

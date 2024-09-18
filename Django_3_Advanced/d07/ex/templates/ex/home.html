@@ -1,0 +1,60 @@
+{% extends 'ex/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Home" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>{% trans "Articles" %}</h1>
+    <div class="row mb-3 fw-bold text-center border-bottom" style="background-color: #f8f9fa;">
+        <div class="col-md-2 p-2">{% trans "Title" %}</div>
+        <div class="col-md-4 p-2">{% trans "Synopsis" %}</div>
+        <div class="col-md-2 p-2">{% trans "Author" %}</div>
+        <div class="col-md-1 p-2">{% trans "Created" %}</div>
+        <div class="col-md-1 p-2">{% trans "Updated" %}</div>
+        <div class="col-md-2 p-2">{% trans "Action" %}</div>
+    </div>
+    <!-- Articles Table -->
+    {% for article in articles %}
+    <div class="row mb-2 align-items-center border-bottom py-3">
+        <div class="col-md-2 p-2">{{ article.title }}</div>
+        <div class="col-md-4 p-2">{{ article.synopsis }}</div>
+        <div class="col-md-2 p-2">{{ article.author.username }}</div>
+        <div class="col-md-1 p-2">{{ article.created|date:"Y-m-d H:i:s" }}</div>
+        <div class="col-md-1 p-2">{{ article.updated|date:"Y-m-d H:i:s" }}</div>
+        <div class="col-md-2 p-2 text-center">
+            <a class="btn btn-primary btn-sm" href="{% url 'article_detail' article.id %}">{% trans "Detail" %}</a>
+            {% if user.is_authenticated %}
+            {% if article in user.favorites.all %}
+            <button class="btn btn-warning btn-sm" onclick="toggleFavorite('{{ article.id }}', false)">⭐️</button>
+            {% else %}
+            <button class="btn btn-outline-warning btn-sm" onclick="toggleFavorite('{{ article.id }}', true)">⭐️</button>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="row mb-2 align-items-center">
+        <div class="col-12 text-center">{% trans "No articles available." %}</div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function toggleFavorite(articleId, add) {
+    fetch(`/favorite/${articleId}/${add ? 'add' : 'remove'}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        if (response.ok) {
+            location.reload();
+        } else {
+            alert('{% trans "Failed to update favorite status." %}');
+        }
+    });
+}
+</script>
+
+{% endblock %}

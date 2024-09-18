@@ -1,0 +1,61 @@
+{% extends 'ex/base.html' %}
+{% load i18n %}
+{% block title %}Favourites{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">{% trans "Favourite Articles" %}</h1>
+    </div>
+
+    <!-- Grid Layout for Header -->
+    <div class="row mb-3 fw-bold text-center border-bottom" style="background-color: #f8f9fa;">
+        <div class="col-md-2 p-2">{% trans "Title" %}</div>
+        <div class="col-md-4 p-2">{% trans "Synopsis" %}</div>
+        <div class="col-md-2 p-2">{% trans "Author" %}</div>
+        <div class="col-md-1 p-2">{% trans "Created" %}</div>
+        <div class="col-md-1 p-2">{% trans "Updated" %}</div>
+        <div class="col-md-2 p-2">{% trans "Action" %}</div>
+    </div>
+
+    <!-- Favourite Articles Table -->
+    {% for article in favorites %}
+    <div class="row mb-2 align-items-center border-bottom py-3">
+        <div class="col-md-2 p-2">{{ article.title }}</div>
+        <div class="col-md-4 p-2">{{ article.synopsis }}</div>
+        <div class="col-md-2 p-2">{{ article.author.username }}</div>
+        <div class="col-md-1 p-2">{{ article.created|date:"Y-m-d H:i:s" }}</div>
+        <div class="col-md-1 p-2">{{ article.updated|date:"Y-m-d H:i:s" }}</div>
+        <div class="col-md-2 p-2 text-center">
+            <a class="btn btn-primary btn-sm" href="{% url 'article_detail' article.id %}">{% trans "Detail" %}</a>
+            <button class="btn btn-outline-danger btn-sm ms-2" onclick="confirmRemoveFavorite('{{ article.id }}')">❌</button>
+        </div>
+    </div>
+    {% empty %}
+    <div class="row mb-2 align-items-center">
+        <div class="col-12 text-center">{% trans "No favorites added yet." %}</div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function confirmRemoveFavorite(articleId) {
+    if (confirm('{% trans "Are you sure you want to remove this article from your favorites?" %}')) {
+        fetch(`/favorite/${articleId}/remove/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('{% trans "Failed to remove favorite." %}');
+            }
+        });
+    }
+}
+</script>
+
+{% endblock %}

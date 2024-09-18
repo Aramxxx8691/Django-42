@@ -1,0 +1,28 @@
+{% extends 'ex/base.html' %}
+{% load i18n %}
+{% block title %}{{ _('Publish New Article') }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Publish Article Form -->
+    <div class="mb-4">
+        <h1>{{ _('Publish New Article') }}</h1>
+        <form method="post" action="{% url 'publications' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.title.id_for_label }}" class="form-label">{{ _('Title') }}</label>
+                {{ form.title }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.synopsis.id_for_label }}" class="form-label">{{ _('Synopsis') }}</label>
+                {{ form.synopsis }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.content.id_for_label }}" class="form-label">{{ _('Content') }}</label>
+                {{ form.content }}
+            </div>
+            <button type="submit" class="btn btn-primary">{{ _('Publish') }}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
