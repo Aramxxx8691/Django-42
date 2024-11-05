@@ -103,15 +103,15 @@ python3 manage.py migrate
 2. Create Views for Table Management
 Implement the following views for interacting with the `ex02_movies` table:
 - Table Creation (`/ex02/init`):
-- - This view should create a table named `ex02_movies` with specifications identical to the ex00_movies table, including fields for `title`, `episode_nb`, `opening_crawl`, `director`, `producer`, and `release_date`.
-- - On success, it should display "OK". If there is an error, the error message should be displayed.
+  - This view should create a table named `ex02_movies` with specifications identical to the ex00_movies table, including fields for `title`, `episode_nb`, `opening_crawl`, `director`, `producer`, and `release_date`.
+  - On success, it should display "OK". If there is an error, the error message should be displayed.
 - Table Population (`/ex02/populate`):
-- - This view should populate the `ex02_movies` table with specific Star Wars movie records.
-- - Each record must include an `episode_nb`, `title`, `director`, `producer`, and `release_date`.
-- - For each successful insertion, it should display "OK". If an error occurs, the error message should be displayed.
+  - This view should populate the `ex02_movies` table with specific Star Wars movie records.
+  - Each record must include an `episode_nb`, `title`, `director`, `producer`, and `release_date`.
+  - For each successful insertion, it should display "OK". If an error occurs, the error message should be displayed.
 - Table Display (`/ex02/display`):
-- - This view should retrieve and display all records from the `ex02_movies` table in an HTML table format, with columns for all fields.
-- - If there is no data available or an error occurs, it should display "No data available".
+  - This view should retrieve and display all records from the `ex02_movies` table in an HTML table format, with columns for all fields.
+  - If there is no data available or an error occurs, it should display "No data available".
 3. SQL Table Specifications
 The `ex02_movies` table must have the following fields:
 - `title`: Unique, variable character chain (64-byte maximum size), non-null.
@@ -184,8 +184,8 @@ docker-compose up
 ### Explanation
 - `Database Interaction`: Use Django’s ORM for data handling, including insertion and retrieval.
 - `View Structure`:
-- - The `populate` view manages insertion and provides feedback on success or error.
-- - The `display` view retrieves all records and renders them in a neatly styled HTML table, with placeholder text if data is absent.
+  - The `populate` view manages insertion and provides feedback on success or error.
+  - The `display` view retrieves all records and renders them in a neatly styled HTML table, with placeholder text if data is absent.
 - `Error Handling`: Ensure that each insertion in populate either confirms success or details an error to help with debugging.
 
 ## Comparing ex02 and ex03
@@ -435,45 +435,45 @@ The following URLs are accessible through this app:
 1. 127.0.0.1:8000/ex08/init
 - Purpose: Initializes the database by creating the required tables.
 - Tables Created:
-- - ex08_planets: Fields:
-- - - `id`: Primary key, serial.
-- - - `name`: Unique, varchar(64), non-null.
-- - - `climate`: Varchar.
-- - - `diameter`: Integer.
-- - - `orbital_period`: Integer.
-- - - `population`: Bigint.
-- - - `rotation_period`: Integer.
-- - - `surface_water`: Real.
-- - - `terrain`: Varchar(128).
-- - ex08_people: Fields:
-- - - `id`: Primary key, serial.
-- - - `name`: Unique, varchar(64), non-null.
-- - - `birth_year`: Varchar(32).
-- - - `gender`: Varchar(32).
-- - - `eye_color`: Varchar(32).
-- - - `hair_color`: Varchar(32).
-- - - `height`: Integer.
-- - - `mass`: Real.
-- - - `homeworld`: Varchar(64), foreign key referencing `ex08_planets.name`.
+  - ex08_planets: Fields:
+    - `id`: Primary key, serial.
+    - `name`: Unique, varchar(64), non-null.
+    - `climate`: Varchar.
+    - `diameter`: Integer.
+    - `orbital_period`: Integer.
+    - `population`: Bigint.
+    - `rotation_period`: Integer.
+    - `surface_water`: Real.
+    - `terrain`: Varchar(128).
+  - ex08_people: Fields:
+    - `id`: Primary key, serial.
+    - `name`: Unique, varchar(64), non-null.
+    - `birth_year`: Varchar(32).
+    - `gender`: Varchar(32).
+    - `eye_color`: Varchar(32).
+    - `hair_color`: Varchar(32).
+    - `height`: Integer.
+    - `mass`: Real.
+    - `homeworld`: Varchar(64), foreign key referencing `ex08_planets.name`.
 - Response:
-- - Returns "OK" if tables are successfully created.
-- - If an error occurs, returns a message detailing the problem.
+  - Returns "OK" if tables are successfully created.
+  - If an error occurs, returns a message detailing the problem.
 2. 127.0.0.1:8000/ex08/populate
 - Purpose: Populates the `ex08_planets` and `ex08_people` tables with data from `planets.csv` and `people.csv`, respectively.
 - `Functionality`:
-- - Reads data from each CSV file.
-- - Attempts to insert each record into its respective table.
+  - Reads data from each CSV file.
+  - Attempts to insert each record into its respective table.
 - `Response`:
-- - Displays "OK" for each successful insertion.
-- - If an error occurs during insertion, it displays an error message identifying the record and the issue.
+  - Displays "OK" for each successful insertion.
+  - If an error occurs during insertion, it displays an error message identifying the record and the issue.
 3. 127.0.0.1:8000/ex08/display
 - `Purpose`: Displays a sorted list of people, including their names, homeworlds, and homeworld climate.
 - `Data Requirements`:
-- - Displays all characters’ names, their homeworld, and homeworld climate where climate is either "windy" or "moderately windy."
-- - The list is sorted alphabetically by character name.
+  - Displays all characters’ names, their homeworld, and homeworld climate where climate is either "windy" or "moderately windy."
+  - The list is sorted alphabetically by character name.
 - `Response`:
-- - Displays a table with the required data.
-- - If no data is available, returns "No data available."
+  - Displays a table with the required data.
+  - If no data is available, returns "No data available."
 
 ### Usage Guide
 1. Initialize Tables
@@ -629,9 +629,9 @@ A view is created to handle user searches. The form includes the following field
 Upon form submission, the app performs the following:
 - Validates the input fields.
 - Searches for characters that match the specified criteria:
-- - Gender matches the selected option.
-- - Film release date falls within the specified range.
-- - Homeworld's diameter is greater than or equal to the specified value.
+  - Gender matches the selected option.
+  - Film release date falls within the specified range.
+  - Homeworld's diameter is greater than or equal to the specified value.
 
 ### HTML Template
 The results are rendered in the display.html template, which structures the output in a user-friendly format, including a table displaying:

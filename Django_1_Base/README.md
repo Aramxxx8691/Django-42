@@ -175,9 +175,9 @@ Create a final application `ex03`. Display a page containing a 4 columns x 51 li
 - `Cell Dimensions`: Height: 40 pixels, Width: 80 pixels.
 - `Background Colors`: Each cell will have a shade of the column’s color.
 - `HTML Elements`:
-- - `<th>` tags for column names.
-- - `<tr>` tags for each table row.
-- - `<td>` tags for each cell.
+  - `<th>` tags for column names.
+  - `<tr>` tags for each table row.
+  - `<td>` tags for each cell.
 
 By completing this exercise, you will:
 

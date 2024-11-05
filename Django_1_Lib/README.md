@@ -48,16 +48,16 @@ This exercise involves creating a bash script to install the `path.py` library a
 - `Name`: The script must have a `.sh` extension.
 - `Pip Version`: Display the pip version used.
 - `Library Installation`:
-- - Install the `path.py` development version from its GitHub repository.
-- - Install the library in a folder named `local_lib` within the repository.
-- - If the library already exists, replace it.
+  - Install the `path.py` development version from its GitHub repository.
+  - Install the library in a folder named `local_lib` within the repository.
+  - If the library already exists, replace it.
 - `Logging`: Write installation logs to a `.log` file.
 - `Execution`: Run the Python program if the installation is successful.
 2. Python Program:
 - `Import Path Module`: Import the `path` module from the `local_lib` folder.
 - `File Operations`:
-- - Create a folder and a file within this folder.
-- - Write content to the file and read/display the content.
+  - Create a folder and a file within this folder.
+  - Write content to the file and read/display the content.
 - `Constraints`: Follow specific rules for the Python script.
 ### Example Shell Script Usage
 - `Display pip version`: Shows which version of pip is being used.
@@ -121,9 +121,9 @@ Create a Python program named `roads_to_philosophy.py` that takes a Wikipedia se
 - Identify the first link in the introduction that leads to another Wikipedia article.
 3. Recursion:
 - Repeat the process with the new link until:
-- - The link leads to the Philosophy page.
-- - The page has no valid links (dead end).
-- - The page leads to an already visited article (infinite loop).
+  - The link leads to the Philosophy page.
+  - The page has no valid links (dead end).
+  - The page leads to an already visited article (infinite loop).
 4. Output:
 - Print the visited articles and the total count if the Philosophy page is reached.
 - Print appropriate messages for dead ends and infinite loops.
