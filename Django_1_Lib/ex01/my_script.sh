@@ -1,9 +1,6 @@
 #!/bin/bash
-echo "❇️  Using piprsion: $(pip3 --version)"
-python3 -m venv venv
-source venv/bin/activate
-pip3 install --upgrade pip
-echo "❇️  Using piprsion: $(pip3 --version)"
+echo "❇️  Using pip version: $(pip3 --version)"
+source $VIRTUAL_ENV/bin/activate
 
 LIB_DIR="local_lib"
 LOG_FILE="path_install.log"
@@ -24,5 +21,5 @@ if grep -q "ERROR" "$LOG_FILE"; then
 else
     echo "✅ Installation successful."
     python3 my_program.py
+    exec "$SHELL"
 fi
-

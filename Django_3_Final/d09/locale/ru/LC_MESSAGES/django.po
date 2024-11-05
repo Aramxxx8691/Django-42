@@ -1,0 +1,149 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-17 11:38+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: d07/settings.py:117
+msgid "English"
+msgstr "Англиский"
+
+#: d07/settings.py:118
+msgid "Russian"
+msgstr "Русский"
+
+#: d07/settings.py:119
+msgid "Armenian"
+msgstr "Армянский"
+
+#: d07/settings.py:120
+msgid "French"
+msgstr "Французкий"
+
+#: ex/templates/ex/base.html:69
+msgid "Username"
+msgstr "Логин"
+
+#: ex/templates/ex/base.html:71
+msgid "Login"
+msgstr "Войти"
+
+#: ex/templates/ex/base.html:75
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: ex/templates/ex/base.html:80
+msgid "Logged as"
+msgstr "Зарегистрирован как"
+
+#: ex/templates/ex/base.html:83
+msgid "Logout"
+msgstr "Выйти"
+
+#: ex/templates/ex/base.html:89
+msgid "Language"
+msgstr "Язык"
+
+#: ex/templates/ex/home.html:3
+msgid "Home"
+msgstr "Домой"
+
+#: ex/templates/ex/base.html:51
+msgid "Articles"
+msgstr "Статьи"
+
+#: ex/templates/ex/base.html:53
+msgid "Favourites"
+msgstr "Избранные"
+
+#: ex/templates/ex/base.html:54
+msgid "Publications"
+msgstr "Публикации"
+
+
+#: ex/templates/ex/home.html:9
+msgid "Title"
+msgstr "Заголовок"
+
+#: ex/templates/ex/home.html:10
+msgid "Synopsis"
+msgstr "Аннотация"
+
+#: ex/templates/ex/home.html:11
+msgid "Author"
+msgstr "Автор"
+
+#: ex/templates/ex/home.html:12
+msgid "Created"
+msgstr "Создано"
+
+#: ex/templates/ex/home.html:13
+msgid "Updated"
+msgstr "Обнавлено"
+
+#: ex/templates/ex/home.html:14
+msgid "Action"
+msgstr "Действие"
+
+#: ex/templates/ex/home.html:17
+msgid "Detail"
+msgstr "Детали"
+
+#: ex/templates/ex/home.html:29
+msgid "No articles available."
+msgstr "Нет доступных статей"
+
+#: ex/templates/ex/home.html:46
+msgid "Failed to update favorite status."
+msgstr "Не удалось обновить статус избранного"
+
+#: ex/templates/ex/favourites.html:8
+msgid "Favourite Articles"
+msgstr "Избранные Статьи"
+
+#: ex/templates/ex/favourites.html:36
+msgid "No favorites added yet."
+msgstr "Избранное пока не добавлено."
+
+#: ex/templates/ex/favourites.html:43
+msgid "Are you sure you want to remove this article from your favorites?"
+msgstr "Вы уверены, что хотите удалить эту статью из избранного?"
+
+#: ex/templates/ex/publications.html:9
+msgid "My Articles"
+msgstr "Мои статьи"
+
+#: ex/templates/ex/publications.html:14
+msgid "Publish New Article"
+msgstr "Опубликовать новую статью"
+
+#: ex/templates/ex/publications.html:26
+msgid "Content"
+msgstr "Содержание"
+
+#: ex/templates/ex/publications.html:29
+msgid "Publish"
+msgstr "Публиковать"
+
+#: ex/templates/ex/article_edit.html:7
+msgid "Edit Article"
+msgstr "Редактировать статью"
+
+#: ex/templates/ex/article_edit.html:22
+msgid "Update"
+msgstr "Обновить"

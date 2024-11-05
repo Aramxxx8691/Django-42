@@ -16,7 +16,7 @@ def ex04(request):
         )
         cur = connect.cursor()
         create_table = """
-            CREATE TABLE ex04_movies (
+            CREATE TABLE IF NOT EXISTS ex04_movies (
                 title VARCHAR(64) UNIQUE NOT NULL,
                 episode_nb SERIAL PRIMARY KEY,
                 opening_crawl TEXT,

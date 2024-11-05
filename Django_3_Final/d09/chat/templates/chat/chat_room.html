@@ -1,0 +1,16 @@
+{% extends '../account/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4" data-user-name="{{ user.username }}">
+    <h1 class="mb-4" id="room_name">{{ room_name }}</h1>
+    <div id="chat-log" class="border border-secondary rounded p-3" style="height: 300px; overflow-y: auto;"></div>
+    <div class="input-group mt-3">
+        <textarea id="chat-message-input" class="form-control" rows="3" placeholder="Type your message..."></textarea>
+        <button id="chat-message-submit" class="btn btn-success">Send</button>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/chat.js' %}"></script>
+{% endblock %}

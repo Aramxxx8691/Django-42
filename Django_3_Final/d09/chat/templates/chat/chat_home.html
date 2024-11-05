@@ -1,0 +1,41 @@
+{% extends '../account/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Chat Rooms</h1>
+
+    <!-- Form to create a new chatroom -->
+    <form id="create-chatroom-form" method="POST" action="{% url 'create_chatroom' %}" class="mb-4">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="text" id="chatroom-name" name="name" class="form-control" placeholder="Enter new chatroom name" required>
+            <button type="submit" class="btn btn-primary">Create Chatroom</button>
+        </div>
+    </form>
+
+    <div>
+        <p>Select a chatroom to enter:</p>
+        <select id="existing-chatroom" name="room_name" class="form-control mb-4" required>
+            <option value="" disabled selected>Select a chatroom</option>
+            {% for chatroom in chatrooms %}
+                <option value="{{ chatroom.name }}">{{ chatroom.name }}</option>
+            {% endfor %}
+        </select>
+        <button id="enter-chatroom" class="btn btn-secondary">Enter Chatroom</button>
+    </div>
+
+    <!-- Global Chat Section -->
+    <hr>
+    <h2 class="mt-4">Global Chat</h2>
+    <div id="global-chat-log" class="border border-secondary rounded p-3" style="height: 300px; overflow-y: auto;"></div>
+    <div class="input-group mt-3">
+        <textarea id="global-chat-message-input" class="form-control" rows="3" placeholder="Type your message..."></textarea>
+        <button id="global-chat-message-submit" class="btn btn-success">Send</button>
+    </div>
+</div>
+
+<!-- Include jQuery and chat.js -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/chat.js' %}"></script>
+{% endblock %}

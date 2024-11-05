@@ -26,5 +26,5 @@ def ex02(request):
         form = History()
     
     history = get_history()
-    
+
     return render(request, 'ex02.html', {'form': form, 'history': history})

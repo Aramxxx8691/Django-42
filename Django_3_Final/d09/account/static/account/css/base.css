@@ -1,0 +1,43 @@
+body {
+    padding-top: 60px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.logged-message {
+    color: white;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.navbar-nav-center {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.nav-item .btn {
+    margin-left: 5px;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.form-inline {
+    display: flex;
+    align-items: center;
+}
+
+.form-inline input {
+    margin-right: 5px;
+}
+
+.login-error {
+    color: red;
+    font-size: 0.875rem; /* Adjust font size as needed */
+    margin-left: 10px;   /* Space between the login form and the error message */
+}

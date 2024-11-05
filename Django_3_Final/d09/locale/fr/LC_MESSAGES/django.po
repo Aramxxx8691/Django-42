@@ -1,0 +1,146 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-17 11:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: d07/settings.py:117
+msgid "English"
+msgstr "Anglais"
+
+#: d07/settings.py:118
+msgid "Russian"
+msgstr "Russe"
+
+#: d07/settings.py:119
+msgid "Armenian"
+msgstr "Arménien"
+
+#: d07/settings.py:120
+msgid "French"
+msgstr "Français"
+
+#: account/templates/account/base.html:69
+msgid "Username"
+msgstr "Utilisateur"
+
+#: account/templates/account/base.html:71
+msgid "Login"
+msgstr "Connexion"
+
+#: account/templates/account/base.html:75
+msgid "Register"
+msgstr "S'inscrire"
+
+#: account/templates/account/base.html:80
+msgid "Logged as"
+msgstr "Connecté en tant que"
+
+#: account/templates/account/base.html:83
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: account/templates/account/base.html:89
+msgid "Language"
+msgstr "Langue"
+
+#: account/templates/account/home.html:3
+msgid "Home"
+msgstr "Accueil"
+
+#: account/templates/account/base.html:51
+msgid "Articles"
+msgstr "Articles"
+
+#: account/templates/account/base.html:53
+msgid "Favourites"
+msgstr "Favoris"
+
+#: account/templates/account/base.html:54
+msgid "Publications"
+msgstr "Publications"
+
+#: account/templates/account/home.html:9
+msgid "Title"
+msgstr "Titre"
+
+#: account/templates/account/home.html:10
+msgid "Synopsis"
+msgstr "Résumé"
+
+#: account/templates/account/home.html:11
+msgid "Author"
+msgstr "Auteur"
+
+#: account/templates/account/home.html:12
+msgid "Created"
+msgstr "Créé"
+
+#: account/templates/account/home.html:13
+msgid "Updated"
+msgstr "Mis à jour"
+
+#: account/templates/account/home.html:14
+msgid "Action"
+msgstr "Action"
+
+#: account/templates/account/home.html:17
+msgid "Detail"
+msgstr "Détail"
+
+#: account/templates/account/home.html:29
+msgid "No articles available."
+msgstr "Aucun article disponible"
+
+#: account/templates/account/home.html:46
+msgid "Failed to update favorite status."
+msgstr "Échec de la mise à jour du statut des favoris"
+
+#: account/templates/account/favourites.html:8
+msgid "Favourite Articles"
+msgstr "Articles favoris"
+
+#: account/templates/account/favourites.html:36
+msgid "No favorites added yet."
+msgstr "Aucun favori ajouté pour le moment."
+
+#: account/templates/account/favourites.html:43
+msgid "Are you sure you want to remove this article from your favorites?"
+msgstr "Etes-vous sûr de vouloir supprimer cet article de vos favoris ?"
+
+#: account/templates/account/publications.html:9
+msgid "My Articles"
+msgstr "Mes articles"
+
+#: account/templates/account/publications.html:14
+msgid "Publish New Article"
+msgstr "Publier un nouvel article"
+
+#: account/templates/account/publications.html:26
+msgid "Content"
+msgstr "Contenu"
+
+#: account/templates/account/publications.html:29
+msgid "Publish"
+msgstr "Publier"
+
+#: account/templates/account/article_edit.html:7
+msgid "Edit Article"
+msgstr "Modifier l'article"
+
+#: account/templates/account/article_edit.html:22
+msgid "Update"
+msgstr "Mettre à jour"

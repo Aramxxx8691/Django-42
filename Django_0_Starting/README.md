@@ -181,70 +181,27 @@ In this exercise, you will create a Python script named all_in.py that takes a c
 - Ensure that invalid formats, such as multiple consecutive commas or extra spaces, are handled by filtering and processing the input properly.
 
 ## - ex06: Generating a Sorted List of Musicians
-In this exercise, you will create a Python script to sort and display musicians based on their birth years.
+In this exercise, we will create a Python script that sorts and displays musicians based on their birth years. The task is to sort them by year in ascending order, and if multiple musicians share the same birth year, sort them alphabetically.
 
 ### Objective:
-- Create a script that sorts and displays the names of musicians by their birth year in ascending order. For musicians with the same birth year, sort them alphabetically.
+- Create a Python program that displays the names of musicians sorted by birth year and alphabetically for similar years.
 
 ### Tasks:
 1. Sorting the Dictionary:
-- Convert the dictionary into a list of tuples (name, year).
-- Sort this list first by year (ascending), and then by name (alphabetical) for entries with the same year.
-2. Display Results:
-- Print each musician’s name on a new line, sorted as described.
+- Convert the dictionary into a list of tuples (musician, year).
+- Sort this list first by birth year (ascending) and then alphabetically by name for those 2.with the same year.
+2. Displaying Results:
+- Print each musician's name, sorted as described, one name per line without showing the year.
 
 ### Explanation:
-1. Sorting:
-- To sort by multiple criteria (year first, then name), you can use Python’s built-in sorted() function with a custom sorting key.
-- For example, `sorted(d.items(), key=lambda x: (x[1], x[0]))` sorts by year (first element of the tuple) and then by name (second element of the tuple) for musicians with the same year.
-2. Displaying Results:
-- Iterate over the sorted list and print each musician’s name.
-
-By completing this exercise, you'll practice handling and sorting data structures and preparing output in a structured format.
-
-## Generating HTML Files with Python
-To generate HTML content from a Python script, you need to:
-
-1. Create HTML Content:
-- Build the HTML structure as a string. Include elements like tables, headings, and data rows using Python string formatting.
-2. Write HTML to File:
-- Open a file in write mode and save the generated HTML content.
-
-#### Example Code Explanation:
-1. Building HTML:
-- Use multi-line strings to create HTML content. This includes the `<html>`, `<head>`, `<body>`, and `<table>` elements.
-2. Writing to File:
-- Open a file in write mode (`'w'`), and use `file.write()` to save the HTML content.
-
-### Example Code:
+- To sort by multiple criteria, we use Python’s sorted() function with a custom sorting key. In this case, the first sorting criterion is the birth year, and the second one is the musician's name in case of a tie in the birth year.
+- The sorting function looks like this:
 ```
-html_content = """<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Periodic Table</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid black; padding: 10px; text-align: left; }
-    </style>
-</head>
-<body>
-    <table>
-        <tr>
-            <th>Element</th>
-            <th>Symbol</th>
-            <th>Atomic Number</th>
-            <th>Atomic Mass</th>
-            <th>Electrons</th>
-        </tr>
-"""
-# Append rows and close the HTML tags
-with open(output_file, 'w') as file:
-    file.write(html_content)
+sorted(d.items(), key=lambda x: (x[1], x[0]))
 ```
+This sorts first by the year (x[1]) and then by the name (x[0]).
 
-By following these steps, you can create dynamic HTML content using Python, useful for generating reports or web content programmatically.
+By completing this exercise, you practice sorting and handling dictionary data in Python. The musicians are displayed in ascending order by birth year, and ties are broken alphabetically by name.
 
 ## - ex07: Generating a Periodic Table in HTML
 In this exercise, you'll create a Python script that reads element data from a text file and generates an HTML file representing a periodic table. Each element should be displayed in a "box" with its attributes listed.

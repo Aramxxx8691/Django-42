@@ -21,6 +21,7 @@ def ex10(request):
     for planet in planet_data:
         planet_instance = Planets.objects.create(id=planet['pk'], **planet['fields'])
         planet_instances[planet['pk']] = planet_instance
+        print("Planet: [", planet_instance, "] Population: [", planet_instance.population, "]")
     
     for person in people_data:
         homeworld_id = person['fields'].pop('homeworld', None)

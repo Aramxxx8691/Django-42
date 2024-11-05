@@ -23,7 +23,6 @@ def generate_html(elements):
 </head>
 <body>
 """
-
     for element in elements:
         html_content += f"""
         <div class="element">
@@ -65,4 +64,4 @@ if __name__ == '__main__':
         input_file = sys.argv[1]
         periodic_table(input_file)
     else:
-        print("❌ Usage: python generate_periodic_table.py <input_file>")
+        print("❌ Usage: python periodic_table.py <input_file>")

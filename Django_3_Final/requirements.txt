@@ -1,0 +1,4 @@
+Django==4.2
+psycopg2>=2.8.6,<2.9
+channels==4.0.0
+websockets==12.0

@@ -6,7 +6,6 @@ WORKDIR /d07
 
 COPY ./requirements.txt /requirements.txt
 
-# Install dependencies including gettext
 RUN apk add --update --no-cache \
     libffi-dev \
     build-base \
@@ -14,8 +13,8 @@ RUN apk add --update --no-cache \
     postgresql-client \
     gettext \
     && python3 -m venv /py \
-    && /py/bin/pip install --upgrade pip \
-    && /py/bin/pip install -r /requirements.txt
+    && pip install --upgrade pip \
+    && pip install -r /requirements.txt
 
 COPY ./d07 /d07
 
