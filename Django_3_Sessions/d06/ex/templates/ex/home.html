@@ -35,11 +35,11 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
-                            <strong>{{ tip.author.username }} ({{ tip.author.profile.reputation }} rep)</strong>
+                            <strong>{{ tip.author.username }} ({{ tip.author.reputation }} rep)</strong>
                             <span class="text-muted">{{ tip.date|date:"F j, Y, g:i a" }}</span>
                         </div>
                         <p class="mb-3">{{ tip.content }}</p>
-
+    
                         <!-- Upvote/Downvote section -->
                         <div class="d-flex align-items-center gap-3">
                             <form method="POST" action="{% url 'upvote_tip' tip.id %}" class="mb-0">
@@ -55,9 +55,9 @@
                                     👎 <span>{{ tip.downvotes }}</span>
                                 </button>
                             </form>
-
+    
                             <!-- Delete button (visible to the author, superusers, and users with 30+ reputation) -->
-                            {% if tip.author == user or user.is_superuser or user.profile.reputation >= 30 %}
+                            {% if tip.author == user or user.is_superuser or user.reputation >= 30 %}
                                 <form method="POST" action="{% url 'delete_tip' tip.id %}" class="mb-0">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-outline-danger">❌</button>

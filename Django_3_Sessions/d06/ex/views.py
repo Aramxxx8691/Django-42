@@ -1,8 +1,6 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import HttpResponseForbidden
@@ -10,9 +8,11 @@ from django.utils import timezone
 from datetime import timedelta
 from random import choice
 from .models import Tip, Vote
-from .forms import TipForm
+from .forms import TipForm, CustomUserCreationForm
+from django.contrib.auth import get_user_model
 
-# Create your views here.
+CustomUser = get_user_model()
+
 def home(request):
     current_time = timezone.now()
     if request.user.is_authenticated:
@@ -37,6 +37,7 @@ def home(request):
             response.set_cookie('username', username, max_age=42)
             response.set_cookie('username_expiry', expiry_time.isoformat(), max_age=42)
             return response
+
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = TipForm(request.POST)
@@ -52,35 +53,37 @@ def home(request):
     else:
         form = None
         tips = []
+
     return render(request, 'ex/home.html', {'username': username, 'tips': tips, 'form': form})
 
 @login_required
 def upvote_tip(request, tip_id):
     tip = get_object_or_404(Tip, pk=tip_id)
     vote, created = Vote.objects.get_or_create(user=request.user, tip=tip)
+    
     if vote.vote_type == Vote.UPVOTE:
         vote.delete()
         tip.upvotes -= 1
-        tip.author.profile.reputation -= 5
+        tip.author.reputation -= 5
     elif vote.vote_type == Vote.DOWNVOTE:
         vote.vote_type = Vote.UPVOTE
         vote.save()
         tip.upvotes += 1
         tip.downvotes -= 1
-        tip.author.profile.reputation += 7
+        tip.author.reputation += 7
     else:
         vote.vote_type = Vote.UPVOTE
         vote.save()
         tip.upvotes += 1
-        tip.author.profile.reputation += 5
-    tip.author.profile.save()
+        tip.author.reputation += 5
+    tip.author.save()
     tip.save()
     return redirect('home')
 
 @login_required
 def downvote_tip(request, tip_id):
     tip = get_object_or_404(Tip, pk=tip_id)
-    if request.user.profile.reputation < 15:
+    if request.user.reputation < 15:
         messages.error(request, "You need at least 15 reputation points to downvote.")
         return redirect('home')
     if request.user == tip.author:
@@ -88,39 +91,33 @@ def downvote_tip(request, tip_id):
         return redirect('home')
     vote, created = Vote.objects.get_or_create(user=request.user, tip=tip)
     if vote.vote_type == Vote.DOWNVOTE:
-        # User is removing their downvote
         vote.delete()
         tip.downvotes -= 1
-        tip.author.profile.reputation += 2
+        tip.author.reputation += 2
     elif vote.vote_type == Vote.UPVOTE:
-        # Changing an upvote to a downvote
         vote.vote_type = Vote.DOWNVOTE
         vote.save()
         tip.downvotes += 1
         tip.upvotes -= 1
-        tip.author.profile.reputation -= 7  # Net change for switching from upvote to downvote
+        tip.author.reputation -= 7
     else:
-        # New downvote
         vote.vote_type = Vote.DOWNVOTE
         vote.save()
         tip.downvotes += 1
-        tip.author.profile.reputation -= 2  # Reputation change for a new downvote
-
-    # Save the updated profiles and tips
-    tip.author.profile.save()
+        tip.author.reputation -= 2
+    tip.author.save()
     tip.save()
     messages.success(request, "Downvote applied successfully.")
     return redirect('home')
 
-
 @login_required
 def delete_tip(request, tip_id):
     tip = get_object_or_404(Tip, id=tip_id)
-    if request.user == tip.author or request.user.profile.reputation >= 30:
+    if request.user == tip.author or request.user.reputation >= 30:
         if request.method == 'POST':
             reputation_deduction = (tip.upvotes * 5) + (tip.downvotes * 2)
-            request.user.profile.reputation -= reputation_deduction
-            request.user.profile.save()
+            request.user.reputation -= reputation_deduction
+            request.user.save()
             tip.delete()
             return redirect('home')
     else:
@@ -171,10 +168,13 @@ def logout(request):
 def register(request):
     if request.user.is_authenticated:
         return redirect('home')
+
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password1'])
+            user.save()
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
             if user is not None:
                 auth_login(request, user)
@@ -182,5 +182,6 @@ def register(request):
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
+    
     return render(request, 'ex/register.html', {'form': form})

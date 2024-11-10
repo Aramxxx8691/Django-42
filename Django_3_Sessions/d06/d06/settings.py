@@ -142,3 +142,5 @@ USERNAMES = [
     "user_8",
     "user_9",
 ]
+
+AUTH_USER_MODEL = 'ex.CustomUser'
