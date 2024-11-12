@@ -64,13 +64,17 @@ $(document).ready(function () {
             if (messageType === 'join_message') {
                 // Only show join message to users who are not the one joining
                 if (data.user !== currentUser) {
-                    $('#chat-log').append('<div class="text-muted"><em>' + data.message + '</em></div>');
+                    $('#chat-log').append('<div class="text-muted">Server: ' + data.message + '</div>');
+                } else {
+                    // Display the message for the user who joined
+                    $('#chat-log').append('<div class="text-muted">Server: You have joined the chat</div>');
                 }
             } else if (messageType === 'user_message') {
                 // Display regular user message
                 const message = '<b>' + data.user + ':</b> ' + data.message;
                 $('#chat-log').append('<div>' + message + '</div>');
             }
+            
         };
 
         privateChatSocket.onerror = function (error) {
