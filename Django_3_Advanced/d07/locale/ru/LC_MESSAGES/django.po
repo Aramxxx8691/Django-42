@@ -92,6 +92,10 @@ msgstr "Автор"
 msgid "Created"
 msgstr "Создано"
 
+#: ex/templates/ex/home.html:12
+msgid "When"
+msgstr "Когда"
+
 #: ex/templates/ex/home.html:13
 msgid "Updated"
 msgstr "Обнавлено"

@@ -103,11 +103,19 @@ $(document).ready(function () {
 
     connectPrivateChatSocket(roomName);
 
-    // When a user enters a new room
     $('#enter-chatroom').on('click', function() {
         const selectedRoom = $('#existing-chatroom').val();
         if (selectedRoom) {
-            window.location.href = '/en/chat/' + selectedRoom + '/';
+            $.ajax({
+                url: '/chat/' + selectedRoom + '/',
+                type: 'GET',
+                success: function(response) {
+                    window.location.href = '/chat/' + selectedRoom + '/';
+                },
+                error: function() {
+                    alert('Selected room does not exist.');
+                }
+            });
         } else {
             console.log('No room selected');
         }

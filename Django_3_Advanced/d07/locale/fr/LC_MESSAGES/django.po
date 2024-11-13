@@ -86,6 +86,10 @@ msgid "Author"
 msgstr "Auteur"
 
 #: ex/templates/ex/home.html:12
+msgid "When"
+msgstr "Quand"
+
+#: ex/templates/ex/home.html:12
 msgid "Created"
 msgstr "Créé"
 

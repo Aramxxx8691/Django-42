@@ -89,6 +89,10 @@ msgstr "Auteur"
 msgid "Created"
 msgstr "Créé"
 
+#: ex/templates/ex/home.html:12
+msgid "When"
+msgstr "Quand"
+
 #: account/templates/account/home.html:13
 msgid "Updated"
 msgstr "Mis à jour"

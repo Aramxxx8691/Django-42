@@ -89,6 +89,10 @@ msgstr "Հեղինակ"
 msgid "Created"
 msgstr "Ստեղծվել է"
 
+#: ex/templates/ex/home.html:12
+msgid "When"
+msgstr "Երբ"
+
 #: ex/templates/ex/home.html:13
 msgid "Updated"
 msgstr "Թարմացվել է"
