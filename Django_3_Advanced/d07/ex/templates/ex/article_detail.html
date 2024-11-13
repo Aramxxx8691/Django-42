@@ -40,7 +40,10 @@
 </div>
 <script>
     function toggleFavorite(articleId, add) {
-        fetch(`/favorite/${articleId}/${add ? 'add' : 'remove'}/`, {
+        const lang = window.location.pathname.split('/')[1];
+        const url = `/i18n/favorite/${articleId}/${add ? 'add' : 'remove'}/`.replace('/i18n/', `/${lang}/`);
+    
+        fetch(url, {
             method: 'POST',
             headers: {
                 'X-CSRFToken': '{{ csrf_token }}',
@@ -54,5 +57,5 @@
             }
         });
     }
-    </script>
+</script>
 {% endblock %}

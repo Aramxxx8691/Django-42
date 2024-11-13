@@ -7,22 +7,24 @@
     <h1>{% trans "Articles" %}</h1>
     <div class="row mb-3 fw-bold text-center border-bottom" style="background-color: #f8f9fa;">
         <div class="col-md-2 p-2">{% trans "Title" %}</div>
-        <div class="col-md-4 p-2">{% trans "Synopsis" %}</div>
-        <div class="col-md-2 p-2">{% trans "Author" %}</div>
+        <div class="col-md-3 p-2">{% trans "Synopsis" %}</div>
+        <div class="col-md-1 p-2">{% trans "Author" %}</div>
         <div class="col-md-1 p-2">{% trans "Created" %}</div>
+        <div class="col-md-1 p-2">{% trans "When" %}</div>
         <div class="col-md-1 p-2">{% trans "Updated" %}</div>
         <div class="col-md-2 p-2">{% trans "Action" %}</div>
     </div>
     {% for article in articles %}
     <div class="row mb-2 align-items-center border-bottom py-3">
         <div class="col-md-2 p-2">{{ article.title }}</div>
-        <div class="col-md-4 p-2">
+        <div class="col-md-3 p-2">
             {{ article.synopsis|slice:":20" }}
             {% if article.synopsis|length > 20 %}...{% endif %}
         </div>
-        <div class="col-md-2 p-2">{{ article.author.username }}</div>
+        <div class="col-md-1 p-2">{{ article.author.username }}</div>
         <div class="col-md-1 p-2">{{ article.created|date:"Y-m-d H:i:s" }}</div>
-        <div class="col-md-1 p-2">{{ article.time_since_published }}</div>
+        <div class="col-md-1 p-2">{{ article.time_since_created }}</div>
+        <div class="col-md-1 p-2">{{ article.time_since_updated }}</div>
         <div class="col-md-2 p-2 text-center">
             <a class="btn btn-primary btn-sm" href="{% url 'article_detail' article.id %}">{% trans "Detail" %}</a>
             {% if user.is_authenticated %}
@@ -42,21 +44,25 @@
 </div>
 
 <script>
-function toggleFavorite(articleId, add) {
-    fetch(`/favorite/${articleId}/${add ? 'add' : 'remove'}/`, {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': '{{ csrf_token }}',
-            'Content-Type': 'application/json'
-        }
-    }).then(response => {
-        if (response.ok) {
-            location.reload();
-        } else {
-            alert('{% trans "Failed to update favorite status." %}');
-        }
-    });
-}
+    function toggleFavorite(articleId, add) {
+        const lang = window.location.pathname.split('/')[1];  // Get the current language prefix from the URL
+        const url = `/i18n/favorite/${articleId}/${add ? 'add' : 'remove'}/`.replace('/i18n/', `/${lang}/`);
+    
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('{% trans "Failed to update favorite status." %}');
+            }
+        });
+    }
 </script>
+    
 
 {% endblock %}

@@ -24,5 +24,5 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('', include('ex.urls')),
-    prefix_default_language=False,
+    prefix_default_language=True,
 )

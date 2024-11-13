@@ -16,6 +16,7 @@ class HomeView(ListView):
     model = Article
     template_name = 'ex/home.html'
     context_object_name = 'articles'
+    ordering = ['-created']
 
 class RegisterView(CreateView):
     model = Article
@@ -27,6 +28,11 @@ class RegisterView(CreateView):
         user = form.save()
         auth_login(self.request, user)
         return redirect('home')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
 
 class LoginView(TemplateView):
     template_name = 'ex/home.html'
@@ -68,14 +74,14 @@ class FavouritesView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         favorites = UserFavouriteArticle.objects.filter(user=self.request.user).values_list('article', flat=True)
-        return Article.objects.filter(id__in=favorites)
+        return Article.objects.filter(id__in=favorites).order_by('-created')
 
 class PublicationsView(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
 
     def get(self, request, *args, **kwargs):
-        articles = Article.objects.filter(author=request.user)
+        articles = Article.objects.filter(author=request.user).order_by('-created')
         form = ArticleForm()
         return render(request, 'ex/publications.html', {'articles': articles, 'form': form})
 

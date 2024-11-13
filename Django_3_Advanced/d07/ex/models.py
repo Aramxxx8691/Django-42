@@ -15,8 +15,13 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
-    def time_since_published(self):
-        return timesince(self.created, timezone.now())
+    @property
+    def time_since_created(self):
+        return timesince(self.created)
+
+    @property
+    def time_since_updated(self):
+        return timesince(self.updated)
 
 class UserFavouriteArticle(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
