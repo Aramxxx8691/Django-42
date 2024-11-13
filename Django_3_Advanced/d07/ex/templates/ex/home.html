@@ -13,14 +13,16 @@
         <div class="col-md-1 p-2">{% trans "Updated" %}</div>
         <div class="col-md-2 p-2">{% trans "Action" %}</div>
     </div>
-    <!-- Articles Table -->
     {% for article in articles %}
     <div class="row mb-2 align-items-center border-bottom py-3">
         <div class="col-md-2 p-2">{{ article.title }}</div>
-        <div class="col-md-4 p-2">{{ article.synopsis }}</div>
+        <div class="col-md-4 p-2">
+            {{ article.synopsis|slice:":20" }}
+            {% if article.synopsis|length > 20 %}...{% endif %}
+        </div>
         <div class="col-md-2 p-2">{{ article.author.username }}</div>
         <div class="col-md-1 p-2">{{ article.created|date:"Y-m-d H:i:s" }}</div>
-        <div class="col-md-1 p-2">{{ article.updated|date:"Y-m-d H:i:s" }}</div>
+        <div class="col-md-1 p-2">{{ article.time_since_published }}</div>
         <div class="col-md-2 p-2 text-center">
             <a class="btn btn-primary btn-sm" href="{% url 'article_detail' article.id %}">{% trans "Detail" %}</a>
             {% if user.is_authenticated %}

@@ -4,18 +4,26 @@
 
 {% block content %}
 <div class="container mt-5">
-    <!-- Article Detail Section -->
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card">
                 <div class="card-header text-center">
                     <h1>{{ article.title }}</h1>
+                    {% if user.is_authenticated %}
+                    <div class="text-end">
+                        {% if article in user.favorites.all %}
+                        <button class="btn btn-warning btn-sm" onclick="toggleFavorite('{{ article.id }}', false)">⭐️</button>
+                        {% else %}
+                        <button class="btn btn-outline-warning btn-sm" onclick="toggleFavorite('{{ article.id }}', true)">⭐️</button>
+                        {% endif %}
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3">
                         <span><strong>{% trans 'Author' %}:</strong> {{ article.author.username }}</span>
                         <span><strong>{% trans 'Created' %}:</strong> {{ article.created|date:"Y-m-d H:i" }}</span>
-                        <span><strong>{% trans 'Updated' %}:</strong> {{ article.updated|date:"Y-m-d H:i" }}</span>
+                        <span><strong>{% trans 'Updated' %}:</strong> {{ article.time_since_published }}</span>
                     </div>
                     <div class="mb-4">
                         <h4>{% trans 'Synopsis' %}</h4>
@@ -30,4 +38,21 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleFavorite(articleId, add) {
+        fetch(`/favorite/${articleId}/${add ? 'add' : 'remove'}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('{% trans "Failed to update favorite status." %}');
+            }
+        });
+    }
+    </script>
 {% endblock %}

@@ -12,7 +12,6 @@ RUN apk add --update --no-cache \
     postgresql-dev \
     postgresql-client \
     gettext \
-    && python3 -m venv /py \
     && pip install --upgrade pip \
     && pip install -r /requirements.txt
 

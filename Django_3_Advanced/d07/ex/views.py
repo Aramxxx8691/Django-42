@@ -1,23 +1,39 @@
+from django.http import Http404
+from django.urls import reverse_lazy
 from django.conf import settings
 from django.contrib import messages
 from django.utils.translation import activate
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse, HttpResponseRedirect
+from django.views.generic import View, ListView, CreateView, UpdateView, DetailView, DeleteView, TemplateView
 from .models import Article, UserFavouriteArticle
 from .forms import ArticleForm
 
-# Create your views here.
-def home(request):
-    articles = Article.objects.all()
-    return render(request, 'ex/home.html', {'articles': articles})
+class HomeView(ListView):
+    model = Article
+    template_name = 'ex/home.html'
+    context_object_name = 'articles'
 
-def login(request):
-    if request.user.is_authenticated:
+class RegisterView(CreateView):
+    model = Article
+    template_name = 'ex/register.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        user = form.save()
+        auth_login(self.request, user)
         return redirect('home')
-    if request.method == 'POST':
+
+class LoginView(TemplateView):
+    template_name = 'ex/home.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home')
         username = request.POST.get('username')
         password = request.POST.get('password')
         if not username or not password:
@@ -33,40 +49,37 @@ def login(request):
         else:
             messages.error(request, "Invalid username or password.")
             return redirect('home')
-    return redirect('home')
 
-def logout(request):
-    auth_logout(request)
-    response = redirect('home')
-    response.delete_cookie('username')
-    response.delete_cookie('username_expiry')
-    return response
+class LogoutView(TemplateView):
+    template_name = 'ex/home.html'
 
-def register(request):
-    if request.user.is_authenticated:
-        return redirect('home')
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
-            if user is not None:
-                auth_login(request, user)
-                return redirect('home')
-        else:
-            messages.error(request, "Please correct the errors below.")
-    else:
-        form = UserCreationForm()
-    return render(request, 'ex/register.html', {'form': form})
+    def get(self, request, *args, **kwargs):
+        auth_logout(request)
+        response = redirect('home')
+        response.delete_cookie('username')
+        response.delete_cookie('username_expiry')
+        return response
 
-def favourites(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    return render(request, 'ex/favourites.html')
+class FavouritesView(LoginRequiredMixin, ListView):
+    model = UserFavouriteArticle
+    template_name = 'ex/favourites.html'
+    context_object_name = 'favorites'
+    login_url = '/login/'
 
-@login_required
-def publications(request):
-    if request.method == 'POST':
+    def get_queryset(self):
+        favorites = UserFavouriteArticle.objects.filter(user=self.request.user).values_list('article', flat=True)
+        return Article.objects.filter(id__in=favorites)
+
+class PublicationsView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request, *args, **kwargs):
+        articles = Article.objects.filter(author=request.user)
+        form = ArticleForm()
+        return render(request, 'ex/publications.html', {'articles': articles, 'form': form})
+
+    def post(self, request, *args, **kwargs):
         form = ArticleForm(request.POST)
         if form.is_valid():
             article = form.save(commit=False)
@@ -76,75 +89,79 @@ def publications(request):
             return redirect('publications')
         else:
             messages.error(request, "Please correct the errors below.")
-    else:
-        form = ArticleForm()
-    articles = Article.objects.filter(author=request.user)
-    return render(request, 'ex/publications.html', {'articles': articles, 'form': form})
+            return render(request, 'ex/publications.html', {'form': form})
 
-@login_required
-def article_publish(request):
-    if request.method == 'POST':
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            article = form.save(commit=False)
-            article.author = request.user
-            article.save()
-            messages.success(request, "Article published successfully.")
-            return redirect('publications')
-    else:
-        form = ArticleForm()
-    return render(request, 'ex/article_publish.html', {'form': form})
+class ArticlePublishView(CreateView):
+    model = Article
+    template_name = 'ex/article_publish.html'
+    form_class = ArticleForm
+    success_url = reverse_lazy('publications')
 
-def article_detail(request, id):
-    article = get_object_or_404(Article, id=id)
-    return render(request, 'ex/article_detail.html', {'article': article})
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.save()
+        messages.success(self.request, "Article published successfully.")
+        return super().form_valid(form)
 
-@login_required
-def article_edit(request, pk):
-    article = get_object_or_404(Article, pk=pk, author=request.user)
-    if request.method == 'POST':
-        title = request.POST.get('title')
-        synopsis = request.POST.get('synopsis')
-        content = request.POST.get('content')
-        if not title or not synopsis or not content:
-            messages.error(request, "All fields are required.")
-        else:
-            article.title = title
-            article.synopsis = synopsis
-            article.content = content
-            article.save()
-            messages.success(request, "Article updated successfully.")
-            return redirect('publications')
-    return render(request, 'ex/article_edit.html', {'article': article})
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = 'ex/article_detail.html'
+    context_object_name = 'article'
+    pk_url_kwarg = 'id'
 
-@login_required
-def article_delete(request, pk):
-    article = get_object_or_404(Article, pk=pk, author=request.user)
-    if request.method == 'POST':
-        article.delete()
-        messages.success(request, "Article deleted successfully.")
+class ArticleEditView(LoginRequiredMixin, UpdateView):
+    model = Article
+    template_name = 'ex/article_edit.html'
+    form_class = ArticleForm
+    context_object_name = 'article'
+    login_url = '/login/'
+
+    def get_queryset(self):
+        return Article.objects.filter(author=self.request.user)
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, "Article updated successfully.")
         return redirect('publications')
-    return redirect('publications')
 
-def favorite(request, article_id, action):
-    if not request.user.is_authenticated:
-        return JsonResponse({'error': 'Not authenticated'}, status=403)
-    article = get_object_or_404(Article, id=article_id)
-    if action == 'add':
-        UserFavouriteArticle.objects.get_or_create(user=request.user, article=article)
-    elif action == 'remove':
-        UserFavouriteArticle.objects.filter(user=request.user, article=article).delete()
-    return JsonResponse({'status': 'success'})
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+    model = Article
+    template_name = 'ex/article_delete.html'
+    context_object_name = 'article'
+    success_url = reverse_lazy('publications')
+    login_url = '/login/'
 
-def favourites(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    favorites = UserFavouriteArticle.objects.filter(user=request.user).values_list('article', flat=True)
-    articles = Article.objects.filter(id__in=favorites)
-    return render(request, 'ex/favourites.html', {'favorites': articles})
+    def get_queryset(self):
+        return Article.objects.filter(author=self.request.user)
 
-def set_language(request, lang_code):
-    if lang_code in dict(settings.LANGUAGES):
-        activate(lang_code)
-        request.session[settings.LANGUAGE_SESSION_KEY] = lang_code
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.author != self.request.user:
+            raise Http404("You do not have permission to delete this article.")
+        return obj
+
+class FavoriteView(View):
+    def post(self, request, article_id, action):
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': 'Not authenticated'}, status=403)
+        article = get_object_or_404(Article, id=article_id)
+        if action == 'add':
+            favorite, created = UserFavouriteArticle.objects.get_or_create(user=request.user, article=article)
+            if created:
+                return JsonResponse({'status': 'success', 'message': 'Article liked successfully.'})
+            else:
+                return JsonResponse({'status': 'already_exists', 'message': 'You already liked this article.'})
+        elif action == 'remove':
+            if UserFavouriteArticle.objects.filter(user=request.user, article=article).exists():
+                UserFavouriteArticle.objects.filter(user=request.user, article=article).delete()
+                return JsonResponse({'status': 'success', 'message': 'Article unliked successfully.'})
+            else:
+                return JsonResponse({'status': 'not_found', 'message': 'This article is not in your favorites.'})
+        return JsonResponse({'status': 'error', 'message': 'Invalid action. Use "add" or "remove".'}, status=400)
+
+class SetLanguageView(TemplateView):
+    def get(self, request, lang_code, *args, **kwargs):
+        if lang_code in dict(settings.LANGUAGES):
+            activate(lang_code)
+            request.session[settings.LANGUAGE_SESSION_KEY] = lang_code
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
