@@ -150,3 +150,63 @@ msgstr "Редактировать статью"
 #: ex/templates/ex/article_edit.html:22
 msgid "Update"
 msgstr "Обновить"
+
+#: ex/templates/ex/base.html:37
+msgid "Chat"
+msgstr "Чат"
+
+#: ex/templates/ex/article_edit.html:7
+msgid "Chat Rooms"
+msgstr "Чаты"
+
+#: ex/templates/ex/article_edit.html:12
+msgid "Enter new chatroom name"
+msgstr "Введите название нового чата"
+
+#: ex/templates/ex/article_edit.html:13
+msgid "Create Chatroom"
+msgstr "Создать чат"
+
+#: ex/templates/ex/article_edit.html:20
+msgid "Select a chatroom to enter:"
+msgstr "Выберите чат, чтобы войти:"
+
+#: ex/templates/ex/article_edit.html:22
+msgid "Select a chatroom"
+msgstr "Выберите чат"
+
+#: ex/templates/ex/article_edit.html:27
+msgid "Enter Chatroom"
+msgstr "Войти в чат"
+
+#: ex/templates/ex/article_edit.html:32
+msgid "Select a default chatroom:"
+msgstr "Выберите чат по умолчанию:"
+
+#: ex/templates/ex/chat_room.html:45
+msgid "Chat Messages"
+msgstr "Сообщения чата"
+
+#: ex/templates/ex/chat_room.html:46
+msgid "No messages yet."
+msgstr "Сообщений пока нет."
+
+#: ex/templates/ex/chat_room.html:47
+msgid "Active Users"
+msgstr "Активные пользователи"
+
+#: ex/templates/ex/chat_room.html:48
+msgid "Type your message..."
+msgstr "Введите ваше сообщение..."
+
+#: ex/templates/ex/chat_room.html:49
+msgid "Send"
+msgstr "Отправить"
+
+#: ex/templates/ex/base.html:1
+msgid "Enter your username"
+msgstr "Введите ваше имя пользователя"
+
+#: ex/templates/ex/base.html:2
+msgid "Enter your password"
+msgstr "Введите ваш пароль"

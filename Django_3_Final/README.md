@@ -1,50 +1,90 @@
-Exercice 00: AjAX my formulah!
-Create a new project named d09. In this project, create an application named account.
-The goal of this exercise is to design a connection/disconnection system communicating only thanks to AJAX.
-In this application , you will implement the 127.0.0.1:8000/account URL that must lead to a page that can have two diffrent behaviors depending on the context:
-• The user is not connected: the page must display a standard connection form (login, password). The thing is the communication with the server must only use AJAX and must be a POST type to get connected.
-If the form is not valid, the error(s) must appear on the page.
-Of the form is valid, it must disapear and adopt a new behavior.
-This, of course, without the page being refreshed.
-• The user is connected already: the page must display the following text: "Logged as <user>", <user> being replaced by the name used by the user to get connected as well as Logout button allowing disconnection.
-This button must communicate with the server via AJAX and the ’POST’ method.
-Once logged out, the text and button must not show on the page anymore and the latter must adopt the other behavior.
-The page must never have been refreshed.
-If the page is ’manually’ refreshed, it must return to the behavior it had before refreshing (that does not include the error displaying).
-You can use bootstrap.
-AuthenticationForm, for free!
+# Final
 
-Exercice 01: Basic chat
-Create an application named ’chat’.
-In this application, you must create a page displaying 3 links. Each of them must lead to a different ’chatrooms’.
-The names of these rooms must be in database. You must create a suitable model.
-Each of these links must lead to another page containing a standard functional chat.
-Each chat must have the following specification:
-• It must use ’jquery’ as sole frontend library as well as the Websockets to communicate with the server.(no AJAX)
-• It’s only available to connected users.
-• The name of the chat must appear somewhere.
-• Several users must be able to connect (just in case...).
-• A user can post a message (you had guessed, right?).
-• A message sent by a user must be visible by all the users who have joined the chatroom (everyone knows what a chatroom is, right? Haven’t you read that preamble?).
-• Messages must appear in the bottom and be displayed in ascending order (that one’s for you, by the heater, right.), along with the name of the user that posted them.
-• Messages must not disappear. A message must not replace a previous one. The messages order must not change.
-• When a user joins the chatroom, the message ’<username> has joined the chat’ must appear for all users to see, including the one who just joined. <username> is replaced by said user’s name of course.
+## Exercise 00: AJAX my formulah!
+### Objective:
+In this exercise, we create a login system that communicates with the server using AJAX. The page will display two behaviors based on the user's authentication state:
+- If the user is not logged in, a standard login form (username, password) will be displayed. The form will submit via AJAX (POST) to validate the user's credentials.
+- If the user is logged in, the page will display a message showing the logged-in user and a logout button, both of which will also communicate with the server via AJAX (POST) to log the user out.
 
-Exercice 02: History
-In this exercise, you will improve your chat adding a message history to it.
-When a new user joins the chatroom, they must see the last three messages that have been posted on this chatroom, top down, oldest to newest.
-Once again, you can only use JQuery as frontend libraries and Websockets to communicate with the server.
+### Instructions:
+1. Create a Django project: Name it `d09`.
+2. Create an application named `account`.
+3. Design the page:
+- The URL `127.0.0.1:8000/account` will display the connection form or logged-in user message depending on the user's authentication state.
+- On a successful login, the form should disappear and the logged-in user information should be displayed without refreshing the page.
+- If the user clicks the logout button, they should be logged out and the page should revert to displaying the login form, again without refreshing.
+4. Form validation:
+- Use AJAX to submit the login form and handle errors or success responses.
+- On success, remove the login form and display the "Logged as <username>" text with a logout button.
+- On logout, the "Logged as" text and logout button should disappear, reverting to the login form.
+5. Error Handling: Display validation errors (if any) in the form, and ensure no page refresh occurs.
+6. Use Bootstrap for styling.
 
-Exercice 03: Userlist
-In this exercise, you will improve your chat again adding a connected userlist, this time. AND it will update by itself.
-When the user joins the chatroom, he must be able to access the list of connected users (and he must appear in the list).
-This userlist must be clearly set aside the messages list (other <div> or other html container).
-When a user joins a chatroom, their name must appear in the list, along with other connected users.
-When a user leaves the chatroom, their name must disappear from the list of connected users and the message ’<username> has left the chat’ must appear after the posted messages. (<username> will be the name of the user who just left)
-Once again, you can only use JQuery as frontend libraries and Websockets to communicate with the server.
-Before anything, try to build a functional logic. We’re not looking
-for optimization... yet.
+## Tools/Technologies Used:
+- Django
+- AJAX (jQuery)
+- Bootstrap
+- Django's AuthenticationForm
 
-Exercise 04: Scroll
-Make your chat presentable setting your message list in a fixed size container. If the number of messages exceed the container, they must disappear on top and a scroll bar must appear on the side.
+## Exercise 01: Basic chat
+### Objective:
+Create a simple chat application using Websockets to handle real-time communication between users. The system will include multiple chatrooms, with users able to post messages that are visible to all users in the chatroom.
 
+### Instructions:
+1. Create an application named `chat`.
+2. Database Model:
+- Define a model to store chatroom names.
+- The database should contain at least 3 different chatrooms.
+3. Frontend:
+- Use only jQuery as the frontend library.
+- Use Websockets for communication between the server and the clients.
+4. Chat Functionality:
+- Display a list of available chatrooms on the main page.
+- Each chatroom link should lead to its own chat page.
+- On the chat page:
+  - The name of the chatroom should be displayed.
+  - Users can post messages, which will be visible to all connected users.
+  - Messages must appear in ascending order at the bottom of the chatroom.
+  - When a user joins, display a message indicating the user has joined the chat (e.g., "<username> has joined the chat").
+5. User Authentication:
+- Only authenticated users should be able to access the chatrooms.
+6. WebSocket Communication:
+- Messages must be sent and received via Websockets without using AJAX.
+
+## Exercise 02: History
+### Objective:
+Enhance the chat from Exercise 01 by adding message history. When a new user joins a chatroom, they should see the last three messages posted in that chatroom.
+
+### Instructions:
+1. Display Message History:
+- When a user joins the chatroom, they should see the last 3 messages posted.
+- These messages should be displayed in reverse order (top-down, oldest to newest).
+2. WebSocket Communication:
+- Continue using Websockets for message broadcasting and reception.
+- Ensure that new messages are added below the previous messages without replacing them.
+
+## Exercise 03: Userlist
+### Objective:
+Add a connected user list to the chatroom. The user list should update automatically when a user joins or leaves the chatroom.
+
+### Instructions:
+1. User List Display:
+- Show a list of connected users, which should be displayed separately from the message list.
+2. Dynamic Updates:
+- When a user joins the chatroom, their name should appear in the connected users list.
+- When a user leaves the chatroom, their name should be removed from the list.
+- Display a message ("<username> has left the chat") when a user leaves.
+3. Real-time Updates:
+- Use Websockets to dynamically update the user list and message list in real-time.
+
+## Exercise 04: Scroll
+### Objective:
+Improve the chat interface by adding scrolling functionality to the message container. If the number of messages exceeds the container's height, older messages should be hidden, and a scrollbar should appear.
+
+### Instructions:
+1. Fixed Container for Messages:
+- Set a fixed height for the message container.
+2. Message Overflow:
+- If the number of messages exceeds the container's height, messages should scroll, with the newest messages appearing at the bottom.
+3. Scroll Behavior:
+- When the message container overflows, the scrollbar should appear on the side, and older messages should be pushed up, disappearing from view.

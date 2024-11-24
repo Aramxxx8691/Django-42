@@ -1,40 +1,40 @@
 {% extends '../account/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">Chat Rooms</h1>
-
+    <h1 class="mb-4">{% trans "Chat Rooms" %}</h1>
     <!-- Form to create a new chatroom -->
     <form id="create-chatroom-form" method="POST" action="{% url 'create_chatroom' %}" class="mb-4">
         {% csrf_token %}
         <div class="input-group">
-            <input type="text" id="chatroom-name" name="name" class="form-control" placeholder="Enter new chatroom name" required>
-            <button type="submit" class="btn btn-primary">Create Chatroom</button>
+            <input type="text" id="chatroom-name" name="name" class="form-control" placeholder="{% trans 'Enter new chatroom name' %}" required>
+            <button type="submit" class="btn btn-primary">{% trans "Create Chatroom" %}</button>
         </div>
+        <div id="chatroom-error-message" class="alert mt-2" style="display: none;"></div>
     </form>
+    <!-- Form to select an existing chatroom -->
     <div>
-        <p>Select a chatroom to enter:</p>
+        <p>{% trans "Select a chatroom to enter:" %}</p>
         <select id="existing-chatroom" name="room_name" class="form-control mb-4" required>
-            <option value="" disabled selected>Select a chatroom</option>
+            <option value="" disabled selected>{% trans "Select a chatroom" %}</option>
             {% for chatroom in chatrooms %}
                 <option value="{{ chatroom.name }}">{{ chatroom.name }}</option>
             {% endfor %}
         </select>
-        <button id="enter-chatroom" class="btn btn-secondary">Enter Chatroom</button>
+        <p><button id="enter-chatroom" class="btn btn-secondary">{% trans "Enter Chatroom" %}</button></p>
     </div>
-
-    <!-- Global Chat Section -->
-    <hr>
-    <h2 class="mt-4">Global Chat</h2>
-    <div id="global-chat-log" class="border border-secondary rounded p-3" style="height: 300px; overflow-y: auto;"></div>
-    <div class="input-group mt-3">
-        <textarea id="global-chat-message-input" class="form-control" rows="3" placeholder="Type your message..."></textarea>
-        <button id="global-chat-message-submit" class="btn btn-success">Send</button>
+    <!-- Default chat rooms links -->
+    <div class="mb-4">
+        <p>{% trans "Select a default chatroom:" %}</p>
+        <div class="list-group">
+            <a href="{% url 'check' room_name='Room1' %}" class="list-group-item list-group-item-action">Room 1</a>
+            <a href="{% url 'check' room_name='Room2' %}" class="list-group-item list-group-item-action">Room 2</a>
+            <a href="{% url 'check' room_name='Room3' %}" class="list-group-item list-group-item-action">Room 3</a>
+        </div>
     </div>
 </div>
-
-<!-- Include jQuery and chat.js -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/chat.js' %}"></script>
 {% endblock %}

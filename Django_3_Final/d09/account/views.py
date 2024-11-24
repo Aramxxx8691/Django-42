@@ -23,32 +23,46 @@ class LoginView(View):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('home')
-        return redirect('login')
+        return render(request, 'account/login.html')
 
     def post(self, request, *args, **kwargs):
-        # Handle AJAX and non-AJAX POST requests
         if request.user.is_authenticated:
             return redirect('home')
+
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             # Handle AJAX request
             try:
                 data = json.loads(request.body)
                 username = data.get('username')
                 password = data.get('password')
-                
+
                 if not username or not password:
                     return JsonResponse({'success': False, 'message': 'Username and password are required.'})
+
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     auth_login(request, user)
                     return JsonResponse({'success': True})
                 else:
                     return JsonResponse({'success': False, 'message': 'Invalid username or password.'})
-
             except json.JSONDecodeError:
                 return JsonResponse({'success': False, 'message': 'Invalid request format.'})
-        # Fallback for non-AJAX requests (redirect to home page)
-        return redirect('home')
+        
+        # Handle non-AJAX requests
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if not username or not password:
+            messages.error(request, "Username and password are required.")
+            return redirect('login')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, "Invalid username or password.")
+            return redirect('login')
 
 class LogoutView(View):
     def post(self, request, *args, **kwargs):

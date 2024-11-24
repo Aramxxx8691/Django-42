@@ -41,14 +41,11 @@
         
                     <ul class="navbar-nav ms-auto">
                         {% if not user.is_authenticated %}
+                            <!-- Login Button -->
                             <li class="nav-item">
-                                <form id="login-form" class="form-inline" method="post" action="{% url 'login' %}">
-                                    {% csrf_token %}
-                                    <input class="form-control me-2" type="text" id="username" name="username" placeholder="{% trans 'Username' %}" aria-label="Username" required>
-                                    <input class="form-control me-2" type="password" id="password" name="password" placeholder="{% trans 'Password' %}" aria-label="Password" required>
-                                    <button class="btn btn-outline-success" type="submit" id="login-btn">{% trans 'Login' %}</button>
-                                </form>
+                                <a class="nav-link btn btn-outline-success me-2" href="{% url 'login' %}">{% trans 'Login' %}</a>
                             </li>
+                            <!-- Register Button -->
                             <li class="nav-item">
                                 <a class="nav-link btn btn-primary" href="{% url 'register' %}">{% trans 'Register' %}</a>
                             </li>
@@ -83,18 +80,18 @@
             </div>
         </nav>
         
+        
 
         <div class="container">
-            <!-- Display any messages -->
-            {% if messages %}
+            <!-- Only show error or system messages -->
+            {% if error_message %}
                 <div class="alert alert-danger" role="alert">
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
+                    {{ error_message }}
                 </div>
             {% endif %}
             {% block content %}{% endblock %}
         </div>
+        
 
         <!-- Toast Container -->
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">

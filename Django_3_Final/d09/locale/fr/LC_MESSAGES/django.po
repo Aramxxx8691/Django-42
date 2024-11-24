@@ -148,3 +148,63 @@ msgstr "Modifier l'article"
 #: account/templates/account/article_edit.html:22
 msgid "Update"
 msgstr "Mettre à jour"
+
+#: ex/templates/ex/base.html:37
+msgid "Chat"
+msgstr "Chat"
+
+#: ex/templates/ex/article_edit.html:7
+msgid "Chat Rooms"
+msgstr "Salles de chat"
+
+#: ex/templates/ex/article_edit.html:12
+msgid "Enter new chatroom name"
+msgstr "Entrez un nouveau nom de salle de chat"
+
+#: ex/templates/ex/article_edit.html:13
+msgid "Create Chatroom"
+msgstr "Créer une salle de chat"
+
+#: ex/templates/ex/article_edit.html:20
+msgid "Select a chatroom to enter:"
+msgstr "Sélectionnez une salle de chat pour entrer :"
+
+#: ex/templates/ex/article_edit.html:22
+msgid "Select a chatroom"
+msgstr "Sélectionner une salle de chat"
+
+#: ex/templates/ex/article_edit.html:27
+msgid "Enter Chatroom"
+msgstr "Entrer dans la salle de chat"
+
+#: ex/templates/ex/article_edit.html:32
+msgid "Select a default chatroom:"
+msgstr "Sélectionnez une salle de chat par défaut :"
+
+#: ex/templates/ex/chat_room.html:45
+msgid "Chat Messages"
+msgstr "Messages du chat"
+
+#: ex/templates/ex/chat_room.html:46
+msgid "No messages yet."
+msgstr "Aucun message pour l'instant."
+
+#: ex/templates/ex/chat_room.html:47
+msgid "Active Users"
+msgstr "Utilisateurs actifs"
+
+#: ex/templates/ex/chat_room.html:48
+msgid "Type your message..."
+msgstr "Tapez votre message..."
+
+#: ex/templates/ex/chat_room.html:49
+msgid "Send"
+msgstr "Envoyer"
+
+#: ex/templates/ex/base.html:1
+msgid "Enter your username"
+msgstr "Entrez votre nom d'utilisateur"
+
+#: ex/templates/ex/base.html:2
+msgid "Enter your password"
+msgstr "Entrez votre mot de passe"

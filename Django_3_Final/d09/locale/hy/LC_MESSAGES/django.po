@@ -148,3 +148,63 @@ msgstr "Խմբագրել հոդվածը"
 #: ex/templates/ex/article_edit.html:22
 msgid "Update"
 msgstr "Թարմացնել"
+
+#: ex/templates/ex/base.html:37
+msgid "Chat"
+msgstr "Չատ"
+
+#: ex/templates/ex/article_edit.html:7
+msgid "Chat Rooms"
+msgstr "Չատերի սենյակներ"
+
+#: ex/templates/ex/article_edit.html:12
+msgid "Enter new chatroom name"
+msgstr "Մուտքագրեք նոր չատի սենյակի անունը"
+
+#: ex/templates/ex/article_edit.html:13
+msgid "Create Chatroom"
+msgstr "Ստեղծել չատ"
+
+#: ex/templates/ex/article_edit.html:20
+msgid "Select a chatroom to enter:"
+msgstr "Ընտրեք չատ սենյակ մուտք գործելու համար:"
+
+#: ex/templates/ex/article_edit.html:22
+msgid "Select a chatroom"
+msgstr "Ընտրեք չատ"
+
+#: ex/templates/ex/article_edit.html:27
+msgid "Enter Chatroom"
+msgstr "Մուտք գործել չատ"
+
+#: ex/templates/ex/article_edit.html:32
+msgid "Select a default chatroom:"
+msgstr "Ընտրեք սերվերի սենյակ:"
+
+#: ex/templates/ex/chat_room.html:45
+msgid "Chat Messages"
+msgstr "Չատ հաղորդագրություններ"
+
+#: ex/templates/ex/chat_room.html:46
+msgid "No messages yet."
+msgstr "Հաղորդագրություններ դեռ չկան։"
+
+#: ex/templates/ex/chat_room.html:47
+msgid "Active Users"
+msgstr "Ակտիվ օգտատերեր"
+
+#: ex/templates/ex/chat_room.html:48
+msgid "Type your message..."
+msgstr "Գրել ..."
+
+#: ex/templates/ex/chat_room.html:49
+msgid "Send"
+msgstr "Ուղարկել"
+
+#: ex/templates/ex/base.html:1
+msgid "Enter your username"
+msgstr "Մուտքագրեք ձեր օգտանունը"
+
+#: ex/templates/ex/base.html:2
+msgid "Enter your password"
+msgstr "Մուտքագրեք ձեր գաղտնաբառը"

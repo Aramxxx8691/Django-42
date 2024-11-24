@@ -1,108 +1,33 @@
 $(document).ready(function () {
-    const currentUser = $('#room_name').data('user-name');  // Get the current user's username
-
-    // Global chat WebSocket connection
-    function connectGlobalChatSocket() {
-        const globalChatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/global/'
-        );
-
-        globalChatSocket.onopen = function () {
-            console.log("Connected to global chat WebSocket.");
-        };
-
-        globalChatSocket.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            const message = '<b>' + data.user + ':</b> ' + data.message;
-            $('#global-chat-log').append('<div>' + message + '</div>');
-        };
-
-        globalChatSocket.onerror = function (error) {
-            console.error("WebSocket error:", error);
-        };
-
-        globalChatSocket.onclose = function () {
-            console.log("Global chat WebSocket closed. Reconnecting...");
-            setTimeout(connectGlobalChatSocket, 1000); // Retry connection after 1 second
-        };
-
-        $('#global-chat-message-submit').click(function () {
-            const messageInput = $('#global-chat-message-input');
-            const message = messageInput.val();
-
-            if (globalChatSocket.readyState === WebSocket.OPEN) {
-                globalChatSocket.send(JSON.stringify({
-                    'message': message
-                }));
-                messageInput.val('');  // Clear input after sending
-            } else {
-                console.error('Global WebSocket is not open. Ready state is ' + globalChatSocket.readyState);
-            }
-        });
-    }
-
-    connectGlobalChatSocket();
-
-    // Private chat WebSocket connection
     const roomName = $('#room_name').text().trim();
-
+    const chatLog = $('#chat-log');
+    function scrollToBottom() {chatLog.scrollTop(chatLog[0].scrollHeight);}
+    
     function connectPrivateChatSocket(roomName) {
         if (!roomName) return;
-
-        const privateChatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
-        );
-
-        privateChatSocket.onopen = function () {
-            console.log("Connected to private chat room:", roomName);
-        };
-
-        privateChatSocket.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            const messageType = data.message_type;  // Check the message type
-
-            if (messageType === 'join_message') {
-                // Only show join message to users who are not the one joining
-                if (data.user !== currentUser) {
-                    $('#chat-log').append('<div class="text-muted">Server: ' + data.message + '</div>');
-                } else {
-                    // Display the message for the user who joined
-                    $('#chat-log').append('<div class="text-muted">Server: You have joined the chat</div>');
-                }
-            } else if (messageType === 'user_message') {
-                // Display regular user message
-                const message = '<b>' + data.user + ':</b> ' + data.message;
-                $('#chat-log').append('<div>' + message + '</div>');
-            }
-            
-        };
-
-        privateChatSocket.onerror = function (error) {
-            console.error("Private chat WebSocket error:", error);
-        };
-
+        const privateChatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+        privateChatSocket.onopen = function () {console.log("Connected to private chat room:", roomName);};
+        privateChatSocket.onerror = function (error) {console.error("Private chat WebSocket error:", error);};
         privateChatSocket.onclose = function () {
             console.log("Private chat WebSocket closed. Reconnecting...");
             setTimeout(() => connectPrivateChatSocket(roomName), 1000);
         };
-
+        // Handle 'Send' button for private chat
         $('#chat-message-submit').click(function () {
             const messageInput = $('#chat-message-input');
             const message = messageInput.val();
-
             if (privateChatSocket.readyState === WebSocket.OPEN) {
                 privateChatSocket.send(JSON.stringify({
                     'message': message
                 }));
-                messageInput.val('');  // Clear input after sending
-            } else {
-                console.error('Private WebSocket is not open. Ready state is ' + privateChatSocket.readyState);
+                messageInput.val('');
+                scrollToBottom();
             }
+            else {console.error('Private WebSocket is not open. Ready state is ' + privateChatSocket.readyState);}
         });
     }
-
     connectPrivateChatSocket(roomName);
-
+    // Handle entering a chatroom from the home page
     $('#enter-chatroom').on('click', function() {
         const selectedRoom = $('#existing-chatroom').val();
         if (selectedRoom) {
@@ -116,8 +41,25 @@ $(document).ready(function () {
                     alert('Selected room does not exist.');
                 }
             });
-        } else {
-            console.log('No room selected');
         }
+        else {console.log('No room selected');}
+    });
+    // Add error message for "Create Chatroom" button click
+    $('#create-chatroom-form').on('submit', function(e) {
+        const roomName = $('#chatroom-name').val().trim();
+        const errorMessageElement = $('#chatroom-error-message');
+        // Reset error message if any
+        errorMessageElement.text('').hide();
+        // Check if room name contains a space
+        if (roomName.includes(' ')) {
+            // Prevent form submission
+            e.preventDefault();
+            // Show the error message with Bootstrap classes
+            errorMessageElement.text('No spaces allowed in the chatroom name')
+                .removeClass('alert-success')
+                .addClass('alert alert-danger')
+                .show();
+        }
+        else {console.log('Creating chatroom: ' + roomName);}
     });
 });

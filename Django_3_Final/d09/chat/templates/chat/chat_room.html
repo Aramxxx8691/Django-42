@@ -1,16 +1,123 @@
 {% extends '../account/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
-<div class="container mt-4" data-user-name="{{ user.username }}">
-    <h1 class="mb-4" id="room_name">{{ room_name }}</h1>
-    <div id="chat-log" class="border border-secondary rounded p-3" style="height: 300px; overflow-y: auto;"></div>
-    <div class="input-group mt-3">
-        <textarea id="chat-message-input" class="form-control" rows="3" placeholder="Type your message..."></textarea>
-        <button id="chat-message-submit" class="btn btn-success">Send</button>
+<div class="container mt-4" data-user-name="{{ username }}">
+    <!-- Chat Name -->
+    <div class="row mb-3">
+        <div class="col text-center">
+            <h1 id="room_name" class="fw-bold">{{ room_name }}</h1>
+        </div>
+    </div>
+
+    <!-- Chat & User List -->
+    <div class="row">
+        <!-- Chat Log -->
+        <div class="col-lg-8 col-md-7 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-secondary text-white">
+                    <strong>{% trans "Chat Messages"%}</strong>
+                </div>
+                <div id="chat-log" class="card-body overflow-auto" style="height: 400px;">
+                    {% for message in messages %}
+                        <div class="message mb-2" id="message-{{ message.id }}">
+                            <strong>{{ message.user.username }}</strong>: {{ message.content }}
+                            <small class="text-muted">{{ message.timestamp|date:"H:i" }}</small>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">{% trans "No messages yet."%}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- User List -->
+        <div class="col-lg-4 col-md-5 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-secondary text-white">
+                    <strong>{% trans "Active Users"%}</strong>
+                </div>
+                <div id="user-list" class="card-body overflow-auto" style="height: 400px;">
+                    {% for user in users %}
+                        <li class="list-group-item">{{ user.username }}</li>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Message Input -->
+    <div class="row">
+        <div class="col">
+            <div class="input-group">
+                <textarea id="chat-message-input" class="form-control" rows="2" placeholder="{% trans 'Type your message...'%}"></textarea>
+                <button id="chat-message-submit" class="btn btn-success">{% trans "Send"%}</button>
+            </div>
+        </div>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/chat.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        const chatLog = $('#chat-log');
+        const currentUser = $('#room_name').data('user-name');
+        const roomName = $('#room_name').text().trim();
+        // Function to scroll to the bottom of the chat log
+        function scrollToBottom() {
+            chatLog.scrollTop(chatLog[0].scrollHeight);  // Scroll to the bottom
+        }
+        // Call this function to scroll to the bottom on page load
+        scrollToBottom();
+        // Create WebSocket connection
+        const privateChatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/chat/' + roomName + '/'
+        );
+        privateChatSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            const messageType = data.message_type;
+            if (messageType === 'user_list_update') {
+                const users = data.users;
+                const userList = $('#user-list');
+                userList.empty();
+                users.forEach(user => {
+                    userList.append(`<li class="list-group-item">${user}</li>`);
+                });
+            }
+            else if (messageType === 'join_message' || messageType === 'leave_message' || messageType === 'user_message') {
+                let messageHtml = '';
+                // Handle join/leave messages with condition to avoid duplication
+                if (messageType === 'join_message') {
+                    if (data.user !== currentUser) {messageHtml = '<div class="text-muted">Server: ' + data.message + '</div>';}
+                    else {messageHtml = '<div class="text-muted">Server: You have joined the chat</div>';}
+                }
+                else if (messageType === 'leave_message') {messageHtml = '<div class="text-muted">Server: ' + data.message + '</div>';}
+                else if (messageType === 'user_message') {
+                    messageHtml = '<div class="message"><strong>' + data.user + '</strong>: ' + data.message +
+                                   ' <small class="text-muted">' + new Date().toLocaleTimeString().substring(0, 5) + '</small></div>';
+                }
+                // Check if this message already exists in the chat log to avoid duplication
+                if (!chatLog.find('.message:contains("' + data.message + '")').length) {
+                    chatLog.append(messageHtml);  // Append the message if it's not a duplicate
+                }
+            }
+            scrollToBottom();
+        };
+        // Handle 'Send' button for private chat
+        $('#chat-message-submit').click(function () {
+            const messageInput = $('#chat-message-input');
+            const message = messageInput.val();
+
+            if (privateChatSocket.readyState === WebSocket.OPEN) {
+                privateChatSocket.send(JSON.stringify({
+                    'message': message
+                }));
+                messageInput.val('');
+                scrollToBottom();
+            } else {
+                console.error('Private WebSocket is not open. Ready state is ' + privateChatSocket.readyState);
+            }
+        });
+    });
+</script>
 {% endblock %}
