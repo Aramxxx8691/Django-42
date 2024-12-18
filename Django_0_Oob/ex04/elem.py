@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 class Text(str):
     def __str__(self):
-        return super().__str__().replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace('\n', '\n<br />\n')
+        escaped = super().__str__().replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;').replace('\n', '\n<br />\n')
+        return f'"{escaped}"'
+
 
 class Elem:
     class ValidationError(Exception):
@@ -57,14 +59,15 @@ class Elem:
                                                 for elem in content])))
 
 def elem():
-    text = Text('"Kikou les zouzous"')
+    text1 = Text("Hello ground!")
+    text2 = Text("Oh no, not again!")
     elem = Elem(tag='html', attr={}, content=[
         Elem(tag='head', attr={}, content=[
-            Elem(tag='title', attr={}, content=[text])
+            Elem(tag='title', attr={}, content=[text1])
         ]),
         Elem(tag='body', attr={}, content=[
-            Elem(tag='h1', attr={}, content=[text]),
-            Elem(tag='img', attr={'src': 'kikou.jpg', 'alt': text}, tag_type='simple')
+            Elem(tag='h1', attr={}, content=[text2]),
+            Elem(tag='img', attr={'src': "http://i.imgur.com/pfp3T.jpg"}, tag_type='simple')
         ])
     ])
     print(elem)
